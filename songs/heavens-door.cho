@@ -1,0 +1,25 @@
+{title: Knockin On Heaven's Door}
+{artist: Bob Dylan}
+{key: G}
+{time: 4/4}
+{tempo: 72}
+
+{meta: form Intro V1 C V2 C Outro}
+
+{start_of_section: Intro}
+| [G]       [D]       | [Am]                |
+| [G]       [D]       | [C]                 |
+{end_of_section}
+
+{start_of_verse: Verse 1}
+| [G]Mama take this   [D]badge off of  | [Am]me               |
+| [G]I can't    [D]use  it    any- | [C] more                 |
+| [G]It's gettin    [D]dark, too dark to       | [Am]see      |
+| [G]I feel like I'm [D]knockin on heaven's  | [C] door    |
+{end_of_verse}
+
+{start_of_chorus: Chorus}
+| [G]Knock, knock,       [D] knockin' on heaven's      | [Am] door               |
+| [G]Knock, knock,       [D] knockin' on heaven's      | [C] door               |
+
+{end_of_chorus}

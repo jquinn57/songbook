@@ -1,0 +1,26 @@
+{title: Example Song}
+{artist: Example Artist}
+{key: G}
+{time: 4/4}
+{tempo: 72}
+
+{meta: form Intro V1 C V2 C B C Outro}
+{meta: bars-per-line 4}
+{meta: count-in 2}
+
+{start_of_section: Intro}
+| [G]                 | [C]                 |
+| [G]                 | [D]                 |
+{end_of_section}
+
+{start_of_verse: Verse 1}
+| [G]This is the first line of the [C]song |
+| [G]Here is the next line              |
+| [Em]One chord for the whole [C]measure |
+| [G]Two beats and [D]two beats          |
+{end_of_verse}
+
+{start_of_chorus: Chorus}
+| [C]This is the chorus | [G]and its reply |
+| [D]Another whole bar  | [G]home           |
+{end_of_chorus}

@@ -1,0 +1,41 @@
+{title: Take Me Home, Country Roads}
+{artist: John Denver}
+{key: A}
+{time: 2/4}
+{tempo: 85}
+{meta: key_signature A}
+{meta: tonic A}
+
+{start_of_section: Verse 1}
+ Almost [A]heaven, [F#m]West Virginia,
+ [E]Blue Ridge Mountains, [D]Shenandoah [A]River.
+ [A]Life is old there, [F#m]older than the trees,
+ [E]Younger than the mountains [D]growin' like a br[A]eeze
+{end_of_verse}
+
+{start_of_chorus: Chorus}
+ Country [A]Roads, take me [E]home
+ To the [F#m]place I be[D]long:
+ West Vir[A]ginia, mountain [E]momma,
+ Take me [D]home, Country [A]Roads.
+{end_of_chorus}
+
+
+{start_of_section: Verse 1}
+ [A]All my mem'ries[F#m] gather 'round her,
+ [E]Miner's lady, [D]stranger to blue [A]water.
+ [A]Dark and dusty, [F#m]painted on the sky,
+ [E]Misty taste of [D]moonshine, teardrop in my [A]eye.
+{end_of_verse}
+
+{chorus}
+
+{start_of_bridge}
+ [F#m]I hear her [E]voice, in the [A]mornin' hours she calls me,
+ The [D]radio re[A]minds me of my [E]home far away,
+ And [F#m]drivin' down the [G]road
+ I get a [D]feelin' that I [A]should have been home [E]yesterday, yester[E7]day.
+{end_of_bridge}
+
+{chorus}
+
