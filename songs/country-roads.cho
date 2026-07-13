@@ -5,22 +5,22 @@
 {tempo: 85}
 {meta: tonic_sd 1}
 
-{start_of_section: Verse 1}
-|[A]Almost |[A]heaven, |[F#m]West Virgin- |[F#m] ia,|
+{start_of_verse: Verse 1}
+|  [A]Almost |[A]heaven, |[F#m]West Virgin- |[F#m] ia,|
  [E]Blue Ridge|[E] Mountains, |[D]Shenandoah |[A]River| [A]-- .|
- [A]Life is old|[A] there, |[F#m]older than the|[F#m] trees|[F#m]--,|
+ |  [A]Life is old|[A] there, |[F#m]older than the|[F#m] trees|
  [E]Younger than the |[E] mountains |[D]growin' like a br|[A]eeze |
 {end_of_verse}
 
 {start_of_chorus: Chorus}
- |[A] Country |[A]Roads, take me |[E]home
- |[E] To the |[F#m]place I be[D]long:
- West Vir[A]ginia, mountain [E]momma,
- Take me [D]home, Country [A]Roads.
+ Country  |[A]Roads, |[A]take me |[E]home
+ |[E] To the |[F#m]place |[F#m]I be |[D]long:
+ |[D]West Vir |[A]-ginia, |[A]mountain |[E]momma,
+ |[E]Take me |[D]home, |[D] Country |[A]Roads.|[A]|
 {end_of_chorus}
 
 
-{start_of_section: Verse 1}
+{start_of_verse: Verse 2}
  [A]All my mem'ries[F#m] gather 'round her,
  [E]Miner's lady, [D]stranger to blue [A]water.
  [A]Dark and dusty, [F#m]painted on the sky,
@@ -37,4 +37,3 @@
 {end_of_bridge}
 
 {chorus}
-
