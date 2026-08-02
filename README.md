@@ -39,17 +39,17 @@ This extension should remain backward-compatible with normal ChordPro files.
 
 ### Delayed lyric starts
 
-Prefix the first word of a phrase with one or more `~` characters to delay the
-lyrics within that measure. Each `~` represents one eighth note. The opening
-chord remains on beat one, and measures using an offset display beat lines based
+Prefix any lyric fragment with one or more `~` characters to delay it within the
+measure. Each `~` represents one eighth note. The first run is measured from beat
+one; later runs add spacing relative to the preceding lyric. Chords remain at
+their pre-delay position, and measures using an offset display beat lines based
 on the song's `{time:}` metadata.
 
 ```text
-| [G]~~Amazing grace | [C]how sweet the sound |
+| [G]~~Amazing ~~grace | [C]how sweet the sound |
 ```
 
-Only the beginning of the phrase is offset; subsequent words and chords flow
-normally.
+Text following each marker flows normally until another marker is encountered.
 
 ## UI
 
@@ -59,7 +59,8 @@ The application should initially consist of:
 * A rendered song view
 * Responsive layout that works well on desktop and iPad
 * Basic CSS styling with chords above lyrics
-* Equal-width measure cells when bar lines are present
+* Song-wide equal-width measure cells sized to the longest rendered measure
+* Automatic 8-, 4-, or 2-measure rows based on the available width
 
 ## Architecture
 

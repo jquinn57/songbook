@@ -94,34 +94,66 @@ function parseLyricsLine(line: string): LyricsLine {
 }
 
 function parseMeasure(text: string): Measure {
-  let segments = parseSegments(text);
-  let lyricStartOffset = 0;
+  const parsedSegments = parseSegments(text);
+  let segments: Array<ChordSegment | PlainTextSegment> = [];
+  let pendingOffset = 0;
 
-  // The marker belongs to the first lyric phrase, which may follow an opening
-  // chord ("[G]~~Hello") or precede it ("~~[G]Hello").
-  for (const segment of segments) {
-    const markerMatch = segment.text.match(/^(\s*)(~+)/);
-    if (!markerMatch) {
-      if (segment.text.trim().length > 0) {
-        break;
+  for (const segment of parsedSegments) {
+    const markerPattern = /~+/g;
+    let cursor = 0;
+    let chordPlaced = false;
+    let markerMatch: RegExpExecArray | null;
+
+    const appendText = (lyricText: string) => {
+      const lyricOffset = pendingOffset > 0 ? pendingOffset : undefined;
+      pendingOffset = 0;
+
+      if (segment.type === 'chord' && !chordPlaced) {
+        segments.push({
+          type: 'chord',
+          chord: segment.chord,
+          text: lyricText,
+          ...(lyricOffset ? { lyricOffset } : {}),
+        });
+        chordPlaced = true;
+        return;
       }
-      continue;
+
+      segments.push({
+        type: 'text',
+        text: lyricText,
+        ...(lyricOffset ? { lyricOffset } : {}),
+      });
+    };
+
+    while ((markerMatch = markerPattern.exec(segment.text)) !== null) {
+      const lyricBeforeMarker = segment.text.slice(cursor, markerMatch.index);
+      if (lyricBeforeMarker.trim().length > 0) {
+        appendText(lyricBeforeMarker);
+      }
+      pendingOffset += markerMatch[0].length;
+      cursor = markerMatch.index + markerMatch[0].length;
     }
 
-    lyricStartOffset += markerMatch[2].length;
-    segment.text = `${markerMatch[1]}${segment.text.slice(markerMatch[0].length)}`;
+    const remainingLyric = segment.text.slice(cursor);
+    if (remainingLyric.trim().length > 0) {
+      appendText(remainingLyric);
+    } else if (cursor === 0 && pendingOffset === 0 && remainingLyric.length > 0) {
+      appendText(remainingLyric);
+    }
 
-    if (segment.text.trim().length > 0) {
-      break;
+    // Preserve chord-only segments while allowing a marker at the end of one
+    // segment to apply to the lyric in the next segment.
+    if (segment.type === 'chord' && !chordPlaced) {
+      segments.push({ type: 'chord', chord: segment.chord, text: '' });
     }
   }
 
-  segments = segments.filter((segment) => segment.type !== 'text' || segment.text.length > 0);
   if (segments.length === 0) {
     segments = [{ type: 'text', text: '' }];
   }
 
-  return lyricStartOffset > 0 ? { segments, lyricStartOffset } : { segments };
+  return { segments };
 }
 
 function parseSegments(text: string): Array<ChordSegment | PlainTextSegment> {

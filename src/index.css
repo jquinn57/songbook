@@ -220,27 +220,19 @@ h1 {
   text-transform: uppercase;
 }
 
-.line {
-  min-height: 2.5rem;
-}
-
 .comment-line {
   color: #6b7280;
   font-style: italic;
-}
-
-.blank-line {
-  min-height: 1rem;
-}
-
-.lyrics-line {
-  display: block;
 }
 
 .measures {
   display: grid;
   gap: 0.5rem;
   align-items: stretch;
+  justify-content: start;
+  max-width: 100%;
+  overflow-x: auto;
+  padding-bottom: 0.1rem;
 }
 
 .measure {
@@ -274,13 +266,9 @@ h1 {
 .measure-workflow {
   position: relative;
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 0.1rem;
   min-width: 0;
-}
-
-.measure-workflow.has-lyric-offset {
-  padding-left: var(--lyric-start);
 }
 
 .segment-group {
@@ -289,6 +277,11 @@ h1 {
   align-items: flex-start;
   white-space: pre;
   min-width: 0;
+}
+
+.segment-group.has-lyric-offset {
+  position: relative;
+  padding-left: var(--lyric-offset);
 }
 
 .segment-group .chord,
@@ -303,11 +296,11 @@ h1 {
   min-height: 1.5rem;
 }
 
-.offset-anchor-group {
+.delayed-chord-group {
   padding-top: 1.5rem;
 }
 
-.segment-group .offset-anchor-chord {
+.segment-group .delayed-chord {
   position: absolute;
   top: 0;
   left: 0;
@@ -315,11 +308,6 @@ h1 {
 
 .segment-group .lyric {
   color: #111827;
-}
-
-.empty-measure {
-  display: inline-block;
-  color: transparent;
 }
 
 @media (max-width: 900px) {
