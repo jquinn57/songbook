@@ -1,3 +1,4 @@
+import type { CSSProperties } from 'react';
 import { Song, LyricsLine } from '../types';
 import { getKeyRoot, getNashvilleChord, transposeChord } from '../transpose';
 
@@ -47,6 +48,7 @@ export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = 
                   transposeSemitones={transposeSemitones}
                   showNashvilleNumbers={showNashvilleNumbers}
                   songKeyRoot={songKeyRoot ?? undefined}
+                  timeSignature={song.metadata.time}
                 />
               );
             })}
@@ -57,9 +59,10 @@ export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = 
   );
 }
 
-function LyricsLineView({ line, transposeSemitones = 0, showNashvilleNumbers = false, songKeyRoot }: { line: LyricsLine; transposeSemitones?: number; showNashvilleNumbers?: boolean; songKeyRoot?: string }) {
+function LyricsLineView({ line, transposeSemitones = 0, showNashvilleNumbers = false, songKeyRoot, timeSignature }: { line: LyricsLine; transposeSemitones?: number; showNashvilleNumbers?: boolean; songKeyRoot?: string; timeSignature?: string }) {
   const measureCount = Math.max(1, line.measures.length);
   const hasMeasureBars = measureCount > 1;
+  const { beats, eighthNotes } = getTimeSignatureLayout(timeSignature);
 
   return (
     <div className="line lyrics-line">
@@ -67,27 +70,64 @@ function LyricsLineView({ line, transposeSemitones = 0, showNashvilleNumbers = f
         className="measures"
         style={{ gridTemplateColumns: `repeat(${measureCount}, minmax(0, 1fr))` }}
       >
-        {line.measures.map((measure, measureIndex) => (
-          <div className="measure" key={measureIndex}>
-            <div className="measure-workflow">
-              {measure.segments.map((segment, segmentIndex) => {
-                const displayChord = segment.type === 'chord'
-                  ? showNashvilleNumbers
-                    ? getNashvilleChord(segment.chord, songKeyRoot || undefined)
-                    : transposeChord(segment.chord, transposeSemitones)
-                  : '';
-                return (
-                  <span className="segment-group" key={segmentIndex}>
-                    <span className="segment chord">{displayChord}</span>
-                    <span className="segment lyric">{segment.text}</span>
-                  </span>
-                );
-              })}
+        {line.measures.map((measure, measureIndex) => {
+          const hasLyricOffset = (measure.lyricStartOffset ?? 0) > 0;
+          const lyricStartPercent = ((measure.lyricStartOffset ?? 0) / eighthNotes) * 100;
+          const anchorChordIndex = hasLyricOffset
+            ? measure.segments.findIndex((segment) => segment.type === 'chord')
+            : -1;
+          const workflowStyle = hasLyricOffset
+            ? ({ '--lyric-start': `${lyricStartPercent}%` } as CSSProperties)
+            : undefined;
+
+          return (
+            <div className={`measure${hasLyricOffset ? ' has-beat-grid' : ''}`} key={measureIndex}>
+              {hasLyricOffset ? (
+                <div className="beat-grid" aria-hidden="true">
+                  {Array.from({ length: Math.max(0, beats - 1) }, (_, beatIndex) => (
+                    <span
+                      className="beat-line"
+                      key={beatIndex}
+                      style={{ left: `${((beatIndex + 1) / beats) * 100}%` }}
+                    />
+                  ))}
+                </div>
+              ) : null}
+              <div className={`measure-workflow${hasLyricOffset ? ' has-lyric-offset' : ''}`} style={workflowStyle}>
+                {measure.segments.map((segment, segmentIndex) => {
+                  const displayChord = segment.type === 'chord'
+                    ? showNashvilleNumbers
+                      ? getNashvilleChord(segment.chord, songKeyRoot || undefined)
+                      : transposeChord(segment.chord, transposeSemitones)
+                    : '';
+                  return (
+                    <span className={`segment-group${segmentIndex === anchorChordIndex ? ' offset-anchor-group' : ''}`} key={segmentIndex}>
+                      <span className={`segment chord${segmentIndex === anchorChordIndex ? ' offset-anchor-chord' : ''}`}>{displayChord}</span>
+                      <span className="segment lyric">{segment.text}</span>
+                    </span>
+                  );
+                })}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       {!hasMeasureBars && line.measures[0].segments.length === 0 ? <span className="empty-measure">&nbsp;</span> : null}
     </div>
   );
+}
+
+function getTimeSignatureLayout(timeSignature?: string): { beats: number; eighthNotes: number } {
+  const match = timeSignature?.trim().match(/^(\d+)\s*\/\s*(\d+)$/);
+  if (!match) {
+    return { beats: 4, eighthNotes: 8 };
+  }
+
+  const beats = Number(match[1]);
+  const beatValue = Number(match[2]);
+  if (beats < 1 || beatValue < 1) {
+    return { beats: 4, eighthNotes: 8 };
+  }
+
+  return { beats, eighthNotes: beats * (8 / beatValue) };
 }

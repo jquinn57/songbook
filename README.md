@@ -37,6 +37,20 @@ Standard ChordPro renderers will simply display the `|` characters. Our renderer
 
 This extension should remain backward-compatible with normal ChordPro files.
 
+### Delayed lyric starts
+
+Prefix the first word of a phrase with one or more `~` characters to delay the
+lyrics within that measure. Each `~` represents one eighth note. The opening
+chord remains on beat one, and measures using an offset display beat lines based
+on the song's `{time:}` metadata.
+
+```text
+| [G]~~Amazing grace | [C]how sweet the sound |
+```
+
+Only the beginning of the phrase is offset; subsequent words and chords flow
+normally.
+
 ## UI
 
 The application should initially consist of:

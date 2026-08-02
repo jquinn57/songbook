@@ -35,6 +35,8 @@ export interface LyricsLine {
 
 export interface Measure {
   segments: LyricsSegment[];
+  /** Number of eighth notes before the opening lyric phrase begins. */
+  lyricStartOffset?: number;
 }
 
 export type LyricsSegment = ChordSegment | PlainTextSegment;

@@ -251,11 +251,36 @@ h1 {
   min-width: 0;
 }
 
+.measure.has-beat-grid {
+  position: relative;
+}
+
+.beat-grid {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.beat-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(99, 102, 241, 0.2);
+}
+
 .measure-workflow {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: 0.1rem;
   min-width: 0;
+}
+
+.measure-workflow.has-lyric-offset {
+  padding-left: var(--lyric-start);
 }
 
 .segment-group {
@@ -276,6 +301,16 @@ h1 {
   color: #4338ca;
   font-weight: 700;
   min-height: 1.5rem;
+}
+
+.offset-anchor-group {
+  padding-top: 1.5rem;
+}
+
+.segment-group .offset-anchor-chord {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .segment-group .lyric {

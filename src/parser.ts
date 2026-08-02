@@ -84,13 +84,44 @@ function parseLyricsLine(line: string): LyricsLine {
   const measures: Measure[] = rawMeasures
     .map((segment) => segment.trim())
     .filter((segment) => segment.length > 0)
-    .map((segment) => ({ segments: parseSegments(segment) }));
+    .map(parseMeasure);
 
   if (!hasBar) {
-    return { type: 'lyrics', measures: [{ segments: parseSegments(line) }] };
+    return { type: 'lyrics', measures: [parseMeasure(line)] };
   }
 
   return { type: 'lyrics', measures: measures.length ? measures : [{ segments: [] }] };
+}
+
+function parseMeasure(text: string): Measure {
+  let segments = parseSegments(text);
+  let lyricStartOffset = 0;
+
+  // The marker belongs to the first lyric phrase, which may follow an opening
+  // chord ("[G]~~Hello") or precede it ("~~[G]Hello").
+  for (const segment of segments) {
+    const markerMatch = segment.text.match(/^(\s*)(~+)/);
+    if (!markerMatch) {
+      if (segment.text.trim().length > 0) {
+        break;
+      }
+      continue;
+    }
+
+    lyricStartOffset += markerMatch[2].length;
+    segment.text = `${markerMatch[1]}${segment.text.slice(markerMatch[0].length)}`;
+
+    if (segment.text.trim().length > 0) {
+      break;
+    }
+  }
+
+  segments = segments.filter((segment) => segment.type !== 'text' || segment.text.length > 0);
+  if (segments.length === 0) {
+    segments = [{ type: 'text', text: '' }];
+  }
+
+  return lyricStartOffset > 0 ? { segments, lyricStartOffset } : { segments };
 }
 
 function parseSegments(text: string): Array<ChordSegment | PlainTextSegment> {
