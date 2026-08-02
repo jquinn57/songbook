@@ -21,6 +21,7 @@ Supported features:
 * Chords embedded in lyrics using standard ChordPro syntax (e.g. `[G]`)
 * Plain lyric lines
 * Comments
+* Collapsible sections and collapsed section references such as `{chorus}`
 
 ## Custom Extension
 

@@ -1,4 +1,4 @@
-import { Fragment, useLayoutEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import type { LyricsSegment, Measure, Song, SongLine } from '../types';
 import { getKeyRoot, getNashvilleChord, transposeChord } from '../transpose';
@@ -31,6 +31,25 @@ export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = 
   const songKeyRoot = getKeyRoot(song.metadata.key);
   const songBodyRef = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState<MeasureLayout>(INITIAL_LAYOUT);
+  const [collapsedSections, setCollapsedSections] = useState<Set<number>>(
+    () => getInitiallyCollapsedSections(song),
+  );
+
+  useEffect(() => {
+    setCollapsedSections(getInitiallyCollapsedSections(song));
+  }, [song]);
+
+  const toggleSection = (sectionIndex: number) => {
+    setCollapsedSections((current) => {
+      const next = new Set(current);
+      if (next.has(sectionIndex)) {
+        next.delete(sectionIndex);
+      } else {
+        next.add(sectionIndex);
+      }
+      return next;
+    });
+  };
 
   useLayoutEffect(() => {
     const songBody = songBodyRef.current;
@@ -88,37 +107,57 @@ export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = 
       </header>
 
       <div className="song-body" ref={songBodyRef}>
-        {song.sections.map((section, sectionIndex) => (
-          <section className="song-section" key={`${section.name}-${sectionIndex}`}>
-            <div className={`section-label section-label-${getSectionClassName(section.name)}`}>
-              {section.name}
-            </div>
-            {getSectionBlocks(section.lines).map((block, blockIndex) => {
-              if (block.type === 'comment') {
-                return (
-                  <div className="line comment-line" key={blockIndex}>
-                    {block.text}
-                  </div>
-                );
-              }
+        {song.sections.map((section, sectionIndex) => {
+          const isCollapsed = collapsedSections.has(sectionIndex);
+          const sectionId = `song-section-${sectionIndex}`;
 
-              return (
-                <MeasureGrid
-                  columns={layout.columns}
-                  key={blockIndex}
-                  measureWidth={layout.measureWidth}
-                  measures={block.measures}
-                  showNashvilleNumbers={showNashvilleNumbers}
-                  songKeyRoot={songKeyRoot ?? undefined}
-                  timeSignature={song.metadata.time}
-                  transposeSemitones={transposeSemitones}
-                />
-              );
-            })}
-          </section>
-        ))}
+          return (
+            <section className={`song-section${isCollapsed ? ' is-collapsed' : ''}`} key={`${section.name}-${sectionIndex}`}>
+              <button
+                aria-controls={sectionId}
+                aria-expanded={!isCollapsed}
+                className={`section-label section-toggle section-label-${getSectionClassName(section.name)}`}
+                onClick={() => toggleSection(sectionIndex)}
+                type="button"
+              >
+                <span className="section-toggle-icon" aria-hidden="true">{isCollapsed ? '▸' : '▾'}</span>
+                {section.name}
+              </button>
+              <div className="section-content" id={sectionId} hidden={isCollapsed}>
+                {getSectionBlocks(section.lines).map((block, blockIndex) => {
+                  if (block.type === 'comment') {
+                    return (
+                      <div className="line comment-line" key={blockIndex}>
+                        {block.text}
+                      </div>
+                    );
+                  }
+
+                  return (
+                    <MeasureGrid
+                      columns={layout.columns}
+                      key={blockIndex}
+                      measureWidth={layout.measureWidth}
+                      measures={block.measures}
+                      showNashvilleNumbers={showNashvilleNumbers}
+                      songKeyRoot={songKeyRoot ?? undefined}
+                      timeSignature={song.metadata.time}
+                      transposeSemitones={transposeSemitones}
+                    />
+                  );
+                })}
+              </div>
+            </section>
+          );
+        })}
       </div>
     </article>
+  );
+}
+
+function getInitiallyCollapsedSections(song: Song): Set<number> {
+  return new Set(
+    song.sections.flatMap((section, index) => section.collapsedByDefault ? [index] : []),
   );
 }
 

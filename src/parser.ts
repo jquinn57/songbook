@@ -7,6 +7,7 @@ type MetadataKey = (typeof metadataKeys)[number];
 const metadataPattern = /^\{\s*([a-zA-Z]+)\s*:\s*(.*?)\s*\}$/;
 const sectionStartPattern = /^\{\s*(?:start_of_)?(verse|chorus|bridge|intro|outro|pre-chorus|solo|repeat|tag|coda|section)\s*(?:[:=]\s*(.*?)\s*)?\}$/i;
 const sectionEndPattern = /^\{\s*(?:end_of_)?(?:verse|chorus|bridge|intro|outro|pre-chorus|solo|repeat|tag|coda|section)\s*\}$/i;
+const sectionReferencePattern = /^\{\s*(verse|chorus|bridge|intro|outro|pre-chorus|solo|repeat|tag|coda)\s*\}$/i;
 const commentPattern = /^(?:\s*[#;]|\s*\/\/)/;
 
 export function parseChordPro(source: string): Song {
@@ -59,11 +60,27 @@ export function parseChordPro(source: string): Song {
       continue;
     }
 
+    const sectionReferenceMatch = line.match(sectionReferencePattern);
+    if (sectionReferenceMatch) {
+      addSection(currentSection);
+      const referenceKind = sectionReferenceMatch[1].toLowerCase();
+      sections.push({
+        name: normalizeSectionName(sectionReferenceMatch[1]),
+        kind: referenceKind,
+        lines: [],
+        collapsedByDefault: true,
+        referenceKind,
+      });
+      currentSection = { name: 'Default', lines: [] };
+      continue;
+    }
+
     const sectionStartMatch = line.match(sectionStartPattern);
     if (sectionStartMatch) {
       addSection(currentSection);
       currentSection = {
         name: normalizeSectionName(sectionStartMatch[2] ?? sectionStartMatch[1]),
+        kind: sectionStartMatch[1].toLowerCase(),
         lines: [],
       };
       continue;
@@ -80,10 +97,31 @@ export function parseChordPro(source: string): Song {
 
   addSection(currentSection);
 
+  const resolvedSections = sections.map((section, sectionIndex) => {
+    if (!section.referenceKind) {
+      return section;
+    }
+
+    const referenceName = section.referenceKind.toLowerCase();
+    const precedingSource = sections
+      .slice(0, sectionIndex)
+      .reverse()
+      .find((candidate) => !candidate.referenceKind && sectionMatchesReference(candidate, referenceName));
+    const source = precedingSource
+      ?? sections.find((candidate) => !candidate.referenceKind && sectionMatchesReference(candidate, referenceName));
+
+    return source ? { ...section, name: source.name, lines: source.lines } : section;
+  });
+
   return {
     metadata,
-    sections,
+    sections: resolvedSections,
   };
+}
+
+function sectionMatchesReference(section: SongSection, referenceName: string): boolean {
+  return section.kind?.toLowerCase() === referenceName
+    || section.name.trim().toLowerCase() === referenceName;
 }
 
 function parseLyricsLine(line: string): LyricsLine {

@@ -16,6 +16,9 @@ export interface Metadata {
 export interface SongSection {
   name: string;
   lines: SongLine[];
+  kind?: string;
+  collapsedByDefault?: boolean;
+  referenceKind?: string;
 }
 
 export type SongLine = CommentLine | LyricsLine | BlankLine;
