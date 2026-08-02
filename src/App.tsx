@@ -39,7 +39,6 @@ function App() {
             Select a ChordPro file
             <input
               type="file"
-              accept=".cho,.chopro,text/plain"
               onChange={handleFileChange}
             />
           </label>

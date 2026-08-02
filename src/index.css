@@ -196,6 +196,97 @@ h1 {
   color: #4b5563;
 }
 
+.song-form {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin-top: 1rem;
+}
+
+.song-form-label {
+  color: #64748b;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.song-form-sequence {
+  display: flex;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.form-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.form-entry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.form-measure-count {
+  color: #64748b;
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.form-entry-verse,
+.section-label-verse {
+  background: #dbeafe;
+  color: #1d4ed8;
+}
+
+.form-entry-chorus,
+.section-label-chorus {
+  background: #fce7f3;
+  color: #be185d;
+}
+
+.form-entry-bridge,
+.section-label-bridge {
+  background: #fef3c7;
+  color: #a16207;
+}
+
+.form-entry-intro,
+.section-label-intro {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.form-entry-outro,
+.section-label-outro {
+  background: #e2e8f0;
+  color: #475569;
+}
+
+.form-entry-pre-chorus,
+.section-label-pre-chorus {
+  background: #ede9fe;
+  color: #6d28d9;
+}
+
+.form-entry-other,
+.section-label-other {
+  background: #f1f5f9;
+  color: #475569;
+}
+
 .meta-list {
   display: flex;
   flex-wrap: wrap;
@@ -213,9 +304,12 @@ h1 {
 }
 
 .section-label {
+  display: inline-flex;
+  justify-self: start;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
   font-size: 0.95rem;
   font-weight: 700;
-  color: #334155;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }
@@ -265,10 +359,17 @@ h1 {
 
 .measure-workflow {
   position: relative;
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 0.1rem;
+  min-height: 3rem;
   min-width: 0;
+}
+
+.timed-phrase {
+  position: absolute;
+  top: 0;
+  left: var(--phrase-offset);
+  display: flex;
+  gap: 0.1rem;
+  white-space: nowrap;
 }
 
 .segment-group {
@@ -277,11 +378,6 @@ h1 {
   align-items: flex-start;
   white-space: pre;
   min-width: 0;
-}
-
-.segment-group.has-lyric-offset {
-  position: relative;
-  padding-left: var(--lyric-offset);
 }
 
 .segment-group .chord,
@@ -300,10 +396,18 @@ h1 {
   padding-top: 1.5rem;
 }
 
-.segment-group .delayed-chord {
+.segment-group .delayed-chord-placeholder {
+  position: absolute;
+  visibility: hidden;
+}
+
+.positioned-chord {
   position: absolute;
   top: 0;
-  left: 0;
+  left: var(--chord-offset);
+  color: #4338ca;
+  font-weight: 700;
+  min-height: 1.5rem;
 }
 
 .segment-group .lyric {

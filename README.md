@@ -16,6 +16,7 @@ Supported features:
   * `{key:}`
   * `{time:}`
   * `{tempo:}`
+  * `{meta: form V1/8 V2/8 C/8 B/4 C/8 O/4}` (measure counts are optional)
 * Section directives (verse, chorus, bridge, etc.)
 * Chords embedded in lyrics using standard ChordPro syntax (e.g. `[G]`)
 * Plain lyric lines

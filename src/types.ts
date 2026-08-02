@@ -10,6 +10,7 @@ export interface Metadata {
   key?: string;
   time?: string;
   tempo?: string;
+  form?: string;
 }
 
 export interface SongSection {
@@ -43,13 +44,13 @@ export interface ChordSegment {
   type: 'chord';
   chord: string;
   text: string;
-  /** Eighth-note spacing to insert before this lyric fragment. */
+  /** Eighth-note position of this lyric fragment within the measure. */
   lyricOffset?: number;
 }
 
 export interface PlainTextSegment {
   type: 'text';
   text: string;
-  /** Eighth-note spacing to insert before this lyric fragment. */
+  /** Eighth-note position of this lyric fragment within the measure. */
   lyricOffset?: number;
 }

@@ -44,6 +44,14 @@ export function parseChordPro(source: string): Song {
         metadata[key as MetadataKey] = value;
         continue;
       }
+      if (key === 'meta') {
+        const formMatch = value.match(/^form\s*:?[\s]+(.+)$/i);
+        if (formMatch) {
+          metadata.form = formMatch[1].trim();
+        }
+        // Other extended metadata is valid but not currently displayed.
+        continue;
+      }
     }
 
     if (commentPattern.test(line)) {
@@ -97,6 +105,7 @@ function parseMeasure(text: string): Measure {
   const parsedSegments = parseSegments(text);
   let segments: Array<ChordSegment | PlainTextSegment> = [];
   let pendingOffset = 0;
+  let currentOffset = 0;
 
   for (const segment of parsedSegments) {
     const markerPattern = /~+/g;
@@ -105,7 +114,10 @@ function parseMeasure(text: string): Measure {
     let markerMatch: RegExpExecArray | null;
 
     const appendText = (lyricText: string) => {
-      const lyricOffset = pendingOffset > 0 ? pendingOffset : undefined;
+      if (pendingOffset > 0) {
+        currentOffset += pendingOffset;
+      }
+      const lyricOffset = pendingOffset > 0 ? currentOffset : undefined;
       pendingOffset = 0;
 
       if (segment.type === 'chord' && !chordPlaced) {
