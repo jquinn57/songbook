@@ -4,7 +4,7 @@
 {time: 2/2}
 {tempo: 60}
 
-{meta: form I/8 V1/16 C/16 V2/16 C/16 B/16 V/16 V/16 B/16}
+{meta: form I/8 V1/16 C1/16 V2/16 C2/16 B/16 Vf/16 Vg/16 B/16 V3/16 C3/16}
 
 
 {start_of_intro}
@@ -15,11 +15,11 @@
 [F#m]
 [E]
 [D]
-[D]~~~~~~When the
+[D]~~~~~~<1>When <2>the
 {end_of_intro}
 
 {start_of_verse: Verse 1}
-[A] last rose of
+[A] <3>last rose of
 [A] summer pricks my
 [D] fingers
 [A]~~~~~~ and the
@@ -38,7 +38,7 @@
 {end_of_verse}
 
 {start_of_chorus: Chorus 1}
-[E] I will walk alone
+[E] <2> I-- will walk alone
 [A] ~~~~~~ by the 
 [D] black muddy riv-
 [A] er ~~~~~~~ and
@@ -97,7 +97,7 @@
 {start_of_bridge}
 [Bm] Black muddy ri-
 [E] er
-[A] toll on forev-
+[A] roll on forev-
 [F#m] er. I don't 
 [E] care how deep or 
 [A] wide. If you 
@@ -113,10 +113,10 @@
 [A]
 {end_of_bridge}
 
-{start_of_verse: Flute Solo}
+{start_of_verse: Flute Inst.}
 {end_of_verse}
 
-{start_of_verse: Keys Solo}
+{start_of_verse: Keys Inst.}
 {end_of_verse}
 
 {bridge}
@@ -131,7 +131,7 @@
 [D] years,
 [D] ~~~~~~ when the
 [A] strings of my
-[A] hear start to
+[A] heart start to
 [D] sev-
 [A] er ~~~~~~ and I
 [F#m] stones fall from my
@@ -146,7 +146,7 @@
 [D] black muddy riv-
 [A] er ~~~~~~~ and
 [A] sing me a song
-[E] ~~~~of my 
+[E] ~~~~of my
 [D] own
 [D]
 [E] I will walk alone

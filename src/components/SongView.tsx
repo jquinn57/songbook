@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import type { LyricsSegment, Measure, Song, SongLine } from '../types';
 import { getKeyRoot, getNashvilleChord, transposeChord } from '../transpose';
@@ -20,7 +20,6 @@ type SectionBlock =
 
 interface TimedPhrase {
   offsetEighths: number;
-  previousOffsetEighths: number;
   segments: LyricsSegment[];
 }
 
@@ -97,6 +96,7 @@ export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = 
           <h2>{song.metadata.title ?? 'Untitled Song'}</h2>
           {song.metadata.subtitle ? <p className="subtitle">{song.metadata.subtitle}</p> : null}
           {song.metadata.form ? <SongForm form={song.metadata.form} /> : null}
+          <ScaleDegreeKey />
         </div>
         <div className="meta-list">
           {song.metadata.artist ? <span>{song.metadata.artist}</span> : null}
@@ -152,6 +152,21 @@ export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = 
         })}
       </div>
     </article>
+  );
+}
+
+function ScaleDegreeKey() {
+  return (
+    <div className="scale-degree-key" aria-label="Melody scale degree colors">
+      <span className="scale-degree-key-label">Melody</span>
+      <div className="scale-degree-key-sequence">
+        {[1, 2, 3, 4, 5, 6, 7].map((degree) => (
+          <span className={`scale-degree-key-entry melody-degree-${degree}`} key={degree}>
+            {degree}
+          </span>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -272,40 +287,42 @@ function MeasureView({ beats, eighthNotes, measure, transposeSemitones, showNash
       <div className="measure-workflow">
         {phrases.map((phrase, phraseIndex) => {
           const firstSegment = phrase.segments[0];
-          const hasDelayedChord = phrase.offsetEighths > 0 && firstSegment?.type === 'chord';
+          if (phrase.offsetEighths <= 0 || firstSegment?.type !== 'chord' || !firstSegment.anchorAtMeasureStart) {
+            return null;
+          }
+          return (
+            <span className="measure-start-chord" key={`start-chord-${phraseIndex}`}>
+              {getDisplayChord(firstSegment.chord, transposeSemitones, showNashvilleNumbers, songKeyRoot)}
+            </span>
+          );
+        })}
+        {phrases.map((phrase, phraseIndex) => {
+          const firstSegment = phrase.segments[0];
+          const hasAnchoredChord = phrase.offsetEighths > 0
+            && firstSegment?.type === 'chord'
+            && firstSegment.anchorAtMeasureStart;
           const phraseStyle = {
             '--phrase-offset': `${(phrase.offsetEighths / eighthNotes) * 100}%`,
           } as CSSProperties;
-          const delayedChordStyle = {
-            '--chord-offset': `${(phrase.previousOffsetEighths / eighthNotes) * 100}%`,
-          } as CSSProperties;
 
           return (
-            <Fragment key={phraseIndex}>
-              {hasDelayedChord ? (
-                <span className="positioned-chord" style={delayedChordStyle}>
-                  {getDisplayChord(firstSegment.chord, transposeSemitones, showNashvilleNumbers, songKeyRoot)}
-                </span>
-              ) : null}
-              <span className="timed-phrase" style={phraseStyle}>
-                {phrase.segments.map((segment, segmentIndex) => {
-                  const displayChord = segment.type === 'chord'
-                    ? getDisplayChord(segment.chord, transposeSemitones, showNashvilleNumbers, songKeyRoot)
-                    : '';
-                  const hideDelayedChord = hasDelayedChord && segmentIndex === 0;
+            <span className="timed-phrase" key={phraseIndex} style={phraseStyle}>
+              {phrase.segments.map((segment, segmentIndex) => {
+                const displayChord = segment.type === 'chord'
+                  ? getDisplayChord(segment.chord, transposeSemitones, showNashvilleNumbers, songKeyRoot)
+                  : '';
+                const hideAnchoredChord = hasAnchoredChord && segmentIndex === 0;
 
-                  return (
-                    <span
-                      className={`segment-group${hideDelayedChord ? ' delayed-chord-group' : ''}`}
-                      key={segmentIndex}
-                    >
-                      <span className={`segment chord${hideDelayedChord ? ' delayed-chord-placeholder' : ''}`}>{displayChord}</span>
-                      <span className="segment lyric">{segment.text}</span>
+                return (
+                  <span className={`segment-group${hideAnchoredChord ? ' anchored-chord-group' : ''}`} key={segmentIndex}>
+                    <span className={`segment chord${hideAnchoredChord ? ' anchored-chord-placeholder' : ''}`}>{displayChord}</span>
+                    <span className={`segment lyric${segment.scaleDegree ? ` melody-degree-${segment.scaleDegree}` : ''}`}>
+                      {segment.text}
                     </span>
-                  );
-                })}
-              </span>
-            </Fragment>
+                  </span>
+                );
+              })}
+            </span>
           );
         })}
       </div>
@@ -323,7 +340,6 @@ function getTimedPhrases(segments: LyricsSegment[]): TimedPhrase[] {
   const phrases: TimedPhrase[] = [];
   let currentPhrase: TimedPhrase = {
     offsetEighths: 0,
-    previousOffsetEighths: 0,
     segments: [],
   };
 
@@ -334,7 +350,6 @@ function getTimedPhrases(segments: LyricsSegment[]): TimedPhrase[] {
       }
       currentPhrase = {
         offsetEighths: segment.lyricOffset,
-        previousOffsetEighths: currentPhrase.offsetEighths,
         segments: [],
       };
     }
@@ -383,10 +398,12 @@ function getRequiredMeasureWidth(measure: HTMLElement): number {
   // cell in the song wider. Size the measure from visible chord/lyric content
   // alone, as if the offset markers were not present.
   const phraseGap = parseFloat(getComputedStyle(phrases[0]).columnGap) || 0;
-  const requiredContentWidth = phrases.reduce(
+  const lyricContentWidth = phrases.reduce(
     (width, phrase) => width + phrase.scrollWidth,
     phraseGap * Math.max(0, phrases.length - 1),
   );
+  const anchoredChordWidth = measure.querySelector<HTMLElement>('.measure-start-chord')?.scrollWidth ?? 0;
+  const requiredContentWidth = Math.max(lyricContentWidth, anchoredChordWidth);
 
   const horizontalChrome = parseFloat(measureStyle.paddingLeft)
     + parseFloat(measureStyle.paddingRight)

@@ -43,15 +43,27 @@ This extension should remain backward-compatible with normal ChordPro files.
 
 Prefix any lyric fragment with one or more `~` characters to delay it within the
 measure. Each `~` represents one eighth note. The first run is measured from beat
-one; later runs add spacing relative to the preceding lyric. Chords remain at
-their pre-delay position, and measures using an offset display beat lines based
-on the song's `{time:}` metadata.
+one; later runs add spacing relative to the preceding lyric. Embedded chords move
+with their following lyrics, except that a chord immediately after a bar line or
+at the start of a line remains at the start of its measure. Measures using an
+offset display beat lines based on the song's `{time:}` metadata.
 
 ```text
 | [G]~~Amazing ~~grace | [C]how sweet the sound |
 ```
 
 Text following each marker flows normally until another marker is encountered.
+
+### Melody annotations
+
+Use `<1>` through `<7>` before a lyric to identify the scale degree of its next
+note. The renderer removes the annotation and colors the following word, ending
+at whitespace or at another annotation. This supports both phrase-level and
+note-by-note markup.
+
+```text
+| [G]<1>Ama<2>zing <3>grace |
+```
 
 ## UI
 

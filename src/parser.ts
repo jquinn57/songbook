@@ -1,4 +1,4 @@
-import { ChordSegment, LyricsLine, Measure, Metadata, PlainTextSegment, Song, SongSection } from './types';
+import { ChordSegment, LyricsLine, Measure, Metadata, PlainTextSegment, ScaleDegree, Song, SongSection } from './types';
 
 const metadataKeys = ['title', 'subtitle', 'artist', 'key', 'time', 'tempo'] as const;
 
@@ -141,6 +141,9 @@ function parseLyricsLine(line: string): LyricsLine {
 
 function parseMeasure(text: string): Measure {
   const parsedSegments = parseSegments(text);
+  if (text.startsWith('[') && parsedSegments[0]?.type === 'chord') {
+    parsedSegments[0].anchorAtMeasureStart = true;
+  }
   let segments: Array<ChordSegment | PlainTextSegment> = [];
   let pendingOffset = 0;
   let currentOffset = 0;
@@ -163,6 +166,7 @@ function parseMeasure(text: string): Measure {
           type: 'chord',
           chord: segment.chord,
           text: lyricText,
+          ...(segment.anchorAtMeasureStart ? { anchorAtMeasureStart: true } : {}),
           ...(lyricOffset ? { lyricOffset } : {}),
         });
         chordPlaced = true;
@@ -195,7 +199,12 @@ function parseMeasure(text: string): Measure {
     // Preserve chord-only segments while allowing a marker at the end of one
     // segment to apply to the lyric in the next segment.
     if (segment.type === 'chord' && !chordPlaced) {
-      segments.push({ type: 'chord', chord: segment.chord, text: '' });
+      segments.push({
+        type: 'chord',
+        chord: segment.chord,
+        text: '',
+        ...(segment.anchorAtMeasureStart ? { anchorAtMeasureStart: true } : {}),
+      });
     }
   }
 
@@ -203,7 +212,82 @@ function parseMeasure(text: string): Measure {
     segments = [{ type: 'text', text: '' }];
   }
 
-  return { segments };
+  return { segments: applyMelodyAnnotations(segments) };
+}
+
+function applyMelodyAnnotations(segments: Array<ChordSegment | PlainTextSegment>): Array<ChordSegment | PlainTextSegment> {
+  const annotatedSegments: Array<ChordSegment | PlainTextSegment> = [];
+  let activeDegree: ScaleDegree | undefined;
+  let degreeHasText = false;
+
+  for (const segment of segments) {
+    const tokenPattern = /<([1-7])>|(\s+)|([^<\s]+|<)/g;
+    let chordPlaced = false;
+    let offsetPlaced = false;
+    let tokenMatch: RegExpExecArray | null;
+
+    const appendPiece = (text: string, scaleDegree?: ScaleDegree) => {
+      const lyricOffset = !offsetPlaced ? segment.lyricOffset : undefined;
+      offsetPlaced = true;
+
+      if (segment.type === 'chord' && !chordPlaced) {
+        annotatedSegments.push({
+          type: 'chord',
+          chord: segment.chord,
+          text,
+          ...(segment.anchorAtMeasureStart ? { anchorAtMeasureStart: true } : {}),
+          ...(lyricOffset !== undefined ? { lyricOffset } : {}),
+          ...(scaleDegree !== undefined ? { scaleDegree } : {}),
+        });
+        chordPlaced = true;
+        return;
+      }
+
+      annotatedSegments.push({
+        type: 'text',
+        text,
+        ...(lyricOffset !== undefined ? { lyricOffset } : {}),
+        ...(scaleDegree !== undefined ? { scaleDegree } : {}),
+      });
+    };
+
+    while ((tokenMatch = tokenPattern.exec(segment.text)) !== null) {
+      if (tokenMatch[1]) {
+        activeDegree = Number(tokenMatch[1]) as ScaleDegree;
+        degreeHasText = false;
+        continue;
+      }
+
+      const token = tokenMatch[0];
+      if (tokenMatch[2]) {
+        appendPiece(token);
+        if (degreeHasText) {
+          activeDegree = undefined;
+          degreeHasText = false;
+        }
+        continue;
+      }
+
+      appendPiece(token, activeDegree);
+      if (activeDegree !== undefined) {
+        degreeHasText = true;
+      }
+    }
+
+    if (segment.type === 'chord' && !chordPlaced) {
+      annotatedSegments.push({
+        type: 'chord',
+        chord: segment.chord,
+        text: '',
+        ...(segment.anchorAtMeasureStart ? { anchorAtMeasureStart: true } : {}),
+        ...(segment.lyricOffset !== undefined ? { lyricOffset: segment.lyricOffset } : {}),
+      });
+    }
+  }
+
+  return annotatedSegments.length > 0
+    ? annotatedSegments
+    : [{ type: 'text', text: '' }];
 }
 
 function parseSegments(text: string): Array<ChordSegment | PlainTextSegment> {

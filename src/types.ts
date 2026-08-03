@@ -42,13 +42,17 @@ export interface Measure {
 }
 
 export type LyricsSegment = ChordSegment | PlainTextSegment;
+export type ScaleDegree = 1 | 2 | 3 | 4 | 5 | 6 | 7;
 
 export interface ChordSegment {
   type: 'chord';
   chord: string;
   text: string;
+  /** True when the chord appeared immediately after the measure boundary. */
+  anchorAtMeasureStart?: boolean;
   /** Eighth-note position of this lyric fragment within the measure. */
   lyricOffset?: number;
+  scaleDegree?: ScaleDegree;
 }
 
 export interface PlainTextSegment {
@@ -56,4 +60,5 @@ export interface PlainTextSegment {
   text: string;
   /** Eighth-note position of this lyric fragment within the measure. */
   lyricOffset?: number;
+  scaleDegree?: ScaleDegree;
 }
