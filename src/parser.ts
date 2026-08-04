@@ -140,9 +140,14 @@ function parseLyricsLine(line: string): LyricsLine {
 }
 
 function parseMeasure(text: string): Measure {
-  const parsedSegments = parseSegments(text);
-  if (text.startsWith('[') && parsedSegments[0]?.type === 'chord') {
+  // Source indentation is formatting only. Horizontal lyric timing is
+  // expressed explicitly with `~`, so an untimed first lyric always starts at
+  // the measure's consistent padded left edge.
+  const measureText = text.trimStart();
+  const parsedSegments = parseSegments(measureText);
+  if (measureText.startsWith('[') && parsedSegments[0]?.type === 'chord') {
     parsedSegments[0].anchorAtMeasureStart = true;
+    parsedSegments[0].text = parsedSegments[0].text.trimStart();
   }
   let segments: Array<ChordSegment | PlainTextSegment> = [];
   let pendingOffset = 0;
