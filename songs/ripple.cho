@@ -4,11 +4,19 @@
 {time: 4/4}
 {tempo: 112}
 
-{meta: form V1/16 V2/16 C/8}
+{meta: form I/8 V1/16 V2/16 C/8  V3/16 V4/16 C/8 V5/16 V6/16}
 
 
-
-[] ~~ <3>If my words did
+{start_of_intro}
+[G]
+[G]
+[C]
+[C]
+[C]
+[C]
+[C]
+[G] ~~ <3>If my words did
+{end_of_intro}
 
 {start_of_verse: Verse 1}
 [G] <5>glow
@@ -59,3 +67,80 @@
 [D] blow.
 {end_of_chorus}
 
+{start_of_verse: Verse 3}
+[G] <5>glow
+[G] ~~with the gold of
+[C] sunshine
+[C] ~~~~~~ and my
+[C] tunes ~~~~~~~ were
+[C] played on the
+[C] harp un-
+[G] strung. Would you hear my
+[G] voice
+[G] ~~ come thru the 
+[C] music
+[C] ~~~~ would you
+[G] hold it
+[D] near
+[C] as it were your
+[G] own. Its a hand me
+{end_of_verse}
+
+{start_of_verse: Verse 4}
+[G] down
+[G] ~~ the thoughts are
+[C] broken
+[C] ~~~~~~ per
+[C] haps ~~~~~~~ they're
+[C] better
+[C] left un-
+[G] sung. I don't
+[G] know
+[G] ~~ don't really 
+[C] care
+[C]
+[G] let there be
+[D] songs
+[C] to fill the
+[G] air.
+{end_of_verse}
+
+{chorus}
+
+{start_of_verse: Verse 5}
+[G] <5>glow
+[G] ~~with the gold of
+[C] sunshine
+[C] ~~~~~~ and my
+[C] tunes ~~~~~~~ were
+[C] played on the
+[C] harp un-
+[G] strung. Would you hear my
+[G] voice
+[G] ~~ come thru the 
+[C] music
+[C] ~~~~ would you
+[G] hold it
+[D] near
+[C] as it were your
+[G] own. Its a hand me
+{end_of_verse}
+
+{start_of_verse: Verse 6}
+[G] down
+[G] ~~ the thoughts are
+[C] broken
+[C] ~~~~~~ per
+[C] haps ~~~~~~~ they're
+[C] better
+[C] left un-
+[G] sung. I don't
+[G] know
+[G] ~~ don't really 
+[C] care
+[C]
+[G] let there be
+[D] songs
+[C] to fill the
+[G] air.
+{end_of_verse}

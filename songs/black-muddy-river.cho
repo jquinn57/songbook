@@ -4,7 +4,7 @@
 {time: 2/2}
 {tempo: 60}
 
-{meta: form I/8 V1/16 C1/16 V2/16 C2/16 B/16 Vf/16 Vg/16 B/16 V3/16 C3/16}
+{meta: form I/8 V1/16 C1/16 V2/16 C2/16 B/16 Vf/16 Vg/16 B/16 V3/16 C3/16 O/13}
 
 
 {start_of_intro}
@@ -32,8 +32,8 @@
 [D] sing-
 [A] er ~~~~~~ and I
 [F#m] can't tell my
-[E] pillow from a stone--
-[D] ---
+[E] pillow from a 
+[D] stone--
 [D]
 {end_of_verse}
 
@@ -59,9 +59,9 @@
 {start_of_verse: Verse 2}
 [A] last bolt of
 [A] sunshine hits the
-[D] mountain
-[A]~~~~~~ and the
-[A] stars seem to
+[D] moun- 
+[A] tain ~~~~~~ and the
+[A] stars start  to
 [A] splatter in the
 [D] sky
 [D] ~~~~~~ when the
@@ -70,8 +70,8 @@
 [D] i-
 [A] zon ~~~~~~ with the
 [F#m] scream of an
-[E] eagle on the fly
-[D] ---
+[E] eagle on the 
+[D] fly ---
 [D]
 {end_of_verse}
 
@@ -124,8 +124,8 @@
 {start_of_verse: Verse 3}
 [A] seems like the
 [A] night will last for-
-[D] ever
-[A]~~~~~~ and there's
+[D] ev-
+[A] er ~~~~~~ and there's
 [A] nothing left to
 [A] do but count the
 [D] years,
@@ -156,5 +156,22 @@
 [F#m] sing me a
 [E] song ~~~~ of my
 [D] own
-[D]
+[D] ~~~~~~~and
 {end_of_chorus}
+
+
+{start_of_outro}
+[F#m] sing me 
+[E] song of my
+[D] own
+[D]
+[A]
+[Bm]
+[D]
+[A]
+[F#m]
+[E]
+[D]
+[D]
+[A]
+{end_of_outro}

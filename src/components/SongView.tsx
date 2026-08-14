@@ -123,6 +123,13 @@ export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = 
                 <span className="section-toggle-icon" aria-hidden="true">{isCollapsed ? '▸' : '▾'}</span>
                 {section.name}
               </button>
+              <div
+                aria-hidden="true"
+                className={`section-label print-section-label section-label-${getSectionClassName(section.name)}`}
+              >
+                {section.name}
+                {isCollapsed ? <span className="print-collapsed-note">Collapsed</span> : null}
+              </div>
               <div className="section-content" id={sectionId} hidden={isCollapsed}>
                 {getSectionBlocks(section.lines).map((block, blockIndex) => {
                   if (block.type === 'comment') {
@@ -394,9 +401,6 @@ function getRequiredMeasureWidth(measure: HTMLElement): number {
     return 120;
   }
 
-  // Timing offsets position phrases within a cell, but should not make every
-  // cell in the song wider. Size the measure from visible chord/lyric content
-  // alone, as if the offset markers were not present.
   const phraseGap = parseFloat(getComputedStyle(phrases[0]).columnGap) || 0;
   const lyricContentWidth = phrases.reduce(
     (width, phrase) => width + phrase.scrollWidth,

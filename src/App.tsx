@@ -11,6 +11,20 @@ function App() {
   const [transposeSemitones, setTransposeSemitones] = useState(0);
   const [showNashvilleNumbers, setShowNashvilleNumbers] = useState(false);
 
+  const handlePdfExport = () => {
+    const originalTitle = document.title;
+    const exportTitle = song?.metadata.title?.trim() || fileName.replace(/\.[^.]+$/, '') || 'chord-chart';
+
+    document.title = exportTitle;
+    const restoreTitle = () => {
+      document.title = originalTitle;
+      window.removeEventListener('afterprint', restoreTitle);
+    };
+
+    window.addEventListener('afterprint', restoreTitle);
+    window.print();
+  };
+
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (!file) {
@@ -79,6 +93,13 @@ function App() {
                 Reset
               </button>
             )}
+            <button
+              className="pdf-export"
+              onClick={handlePdfExport}
+              type="button"
+            >
+              Export PDF
+            </button>
           </div>
         )}
       </header>
