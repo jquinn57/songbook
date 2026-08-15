@@ -4,7 +4,7 @@
 {time: 4/4}
 {tempo: 112}
 
-{meta: form I/8 V1/16 V2/16 C/8  V3/16 V4/16 C/8 V5/16 V6/16}
+{meta: form I/16 V1/16 V2/16 C/8 VF/16 V3/16 V4/16 C/8 V5/16 V6/16}
 
 
 {start_of_intro}
@@ -14,6 +14,14 @@
 [C]
 [C]
 [C]
+[C]
+[G]
+[G]
+[G]
+[C]
+[C]
+[G]
+[D]
 [C]
 [G] ~~ <3>If my words did
 {end_of_intro}
@@ -28,7 +36,7 @@
 [C] harp un-
 [G] strung. Would you hear my
 [G] voice
-[G] ~~ come thru the 
+[G] ~~ come thru the
 [C] music
 [C] ~~~~ would you
 [G] hold it
@@ -47,7 +55,7 @@
 [C] left un-
 [G] sung. I don't
 [G] know
-[G] ~~ don't really 
+[G] ~~ don't really
 [C] care
 [C]
 [G] let there be
@@ -63,9 +71,11 @@
 [D] ~~~~ when there
 [G] is no pebble
 [C] tossed ~~~~~~ nor
-[A7] wind to 
+[A7] wind to
 [D] blow.
 {end_of_chorus}
+
+{verse: Flute verse}
 
 {start_of_verse: Verse 3}
 [G] <5>glow
@@ -77,7 +87,7 @@
 [C] harp un-
 [G] strung. Would you hear my
 [G] voice
-[G] ~~ come thru the 
+[G] ~~ come thru the
 [C] music
 [C] ~~~~ would you
 [G] hold it
@@ -96,7 +106,7 @@
 [C] left un-
 [G] sung. I don't
 [G] know
-[G] ~~ don't really 
+[G] ~~ don't really
 [C] care
 [C]
 [G] let there be
@@ -117,7 +127,7 @@
 [C] harp un-
 [G] strung. Would you hear my
 [G] voice
-[G] ~~ come thru the 
+[G] ~~ come thru the
 [C] music
 [C] ~~~~ would you
 [G] hold it
@@ -136,7 +146,7 @@
 [C] left un-
 [G] sung. I don't
 [G] know
-[G] ~~ don't really 
+[G] ~~ don't really
 [C] care
 [C]
 [G] let there be

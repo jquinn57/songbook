@@ -32,7 +32,7 @@
 [D] sing-
 [A] er ~~~~~~ and I
 [F#m] can't tell my
-[E] pillow from a 
+[E] pillow from a
 [D] stone--
 [D]
 {end_of_verse}
@@ -42,7 +42,7 @@
 [A] alone ~~~~~~ by the
 [D] black muddy riv-
 [A] er ~~~~~~~ and
-[A] sing me a
+[A] <3>sing me a
 [E] song ~~~~of my
 [D] own
 [D]
@@ -50,7 +50,7 @@
 [A] alone ~~~~~~ by the
 [D] black muddy riv-
 [A] er ~~~~~~~ and
-[F#m] sing me a
+[F#m] <1>sing me a
 [E] song ~~~~ of my
 [D] own
 [D] ~~~~~~ When the
@@ -59,7 +59,7 @@
 {start_of_verse: Verse 2}
 [A] last bolt of
 [A] sunshine hits the
-[D] moun- 
+[D] moun-
 [A] tain ~~~~~~ and the
 [A] stars start  to
 [A] splatter in the
@@ -70,7 +70,7 @@
 [D] i-
 [A] zon ~~~~~~ with the
 [F#m] scream of an
-[E] eagle on the 
+[E] eagle on the
 [D] fly ---
 [D]
 {end_of_verse}
@@ -113,11 +113,9 @@
 [A]
 {end_of_bridge}
 
-{start_of_verse: Flute Inst.}
-{end_of_verse}
+{verse: flute verse}
 
-{start_of_verse: Keys Inst.}
-{end_of_verse}
+{verse: keys verse}
 
 {bridge}
 
@@ -145,7 +143,7 @@
 [A] alone ~~~~~~ by the
 [D] black muddy riv-
 [A] er ~~~~~~~ and
-[A] dream me a 
+[A] dream me a
 [E] dream ~~~~of my
 [D] own
 [D]
@@ -161,7 +159,7 @@
 
 
 {start_of_outro}
-[F#m] sing me 
+[F#m] sing me
 [E] song of my
 [D] own
 [D]
