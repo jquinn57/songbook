@@ -95,3 +95,30 @@ React renderer
 Represent songs internally with strongly typed interfaces (Song, Section, Measure, ChordSegment, etc.) so future features such as transposition, metronome synchronization, auto-scroll, PDF export, guitar tab, and traditional notation can be added without redesigning the data model.
 
 The focus of this milestone is correctness, clean architecture, and maintainability—not feature completeness.
+
+## Install on an iPad for offline use
+
+The production build is a Progressive Web App. It precaches the complete app,
+including the built-in songs, and stores imported ChordPro files in IndexedDB on
+the device.
+
+1. Deploy the contents of `dist/` to any HTTPS static host.
+2. Open that URL in Safari on the iPad.
+3. Wait for **Ready for offline use** to appear.
+4. Tap **Share**, then **Add to Home Screen**.
+5. Open Songbook from its Home Screen icon once before going offline.
+
+To verify the installation, enable Airplane Mode, fully close Songbook, and open
+it again from the Home Screen. Imported songs and the last selected song should
+still be available.
+
+Build locally with:
+
+```bash
+npm ci
+npm run build
+```
+
+Service workers require HTTPS, except on `localhost`; opening `dist/index.html`
+directly from the Files app will not install the offline cache. Updates are
+downloaded automatically the next time the installed app is opened online.
