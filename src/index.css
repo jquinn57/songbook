@@ -509,6 +509,14 @@ h1 {
   white-space: nowrap;
 }
 
+.chord-only .timed-phrase {
+  position: static;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  width: 100%;
+}
+
 .segment-group {
   display: inline-flex;
   flex-direction: column;

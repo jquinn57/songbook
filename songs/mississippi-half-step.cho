@@ -1,0 +1,73 @@
+{title: Mississippi Half-Step Uptown Toodeloo}
+{artist: Grateful Dead}
+{key: C}
+{time: 4/4}
+{tempo: 112}
+
+{meta: form  I/4, V/17, PC/4 C/9 S/16}
+
+
+{start_of_intro}
+[Am] [Am/G#]
+[Am/G] [Am/F#]
+[D7]
+[G7]
+{end_of_intro}
+
+{start_of_verse: Verse 1}
+[C]
+[E7]
+[F]
+[Am]
+[F]
+[C] [G]
+[D7]
+[G7]
+[C]
+[E7]
+[F]
+[Am]
+[F]
+[C] [G]
+[F]
+[E7]
+[E7]
+{end_of_verse}
+
+{start_of_section: Pre-Chorus}
+[Am]
+[Am]
+[Am]
+[Am]
+{end_of_section}
+
+{start_of_chorus}
+[F]
+[C] [G]
+[F]
+[C] [G]
+[F]
+[C] [G]
+[Am]
+[E7]
+[E7]
+{end_of_chorus}
+
+{start_of_section: Solo}
+[Am]
+[E7]
+[C]
+[D7]
+[F]
+[Dm]
+[B7]
+[E7]
+[Am]
+[E7]
+[C]
+[D7]
+[F]
+[Am]
+[D7]
+[G7]
+{end_of_section}

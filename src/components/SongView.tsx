@@ -276,10 +276,13 @@ function MeasureView({ beats, eighthNotes, measure, transposeSemitones, showNash
   songKeyRoot?: string;
 }) {
   const hasLyricOffset = measure.segments.some((segment) => (segment.lyricOffset ?? 0) > 0);
+  const chordCount = measure.segments.filter((segment) => segment.type === 'chord').length;
+  const isChordOnly = chordCount > 1
+    && measure.segments.every((segment) => segment.text.trim().length === 0);
   const phrases = getTimedPhrases(measure.segments);
 
   return (
-    <div className={`measure${hasLyricOffset ? ' has-beat-grid' : ''}`}>
+    <div className={`measure${hasLyricOffset ? ' has-beat-grid' : ''}${isChordOnly ? ' chord-only' : ''}`}>
       {hasLyricOffset ? (
         <div className="beat-grid" aria-hidden="true">
           {Array.from({ length: Math.max(0, beats - 1) }, (_, beatIndex) => (
