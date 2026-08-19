@@ -420,7 +420,7 @@ function getRequiredMeasureWidth(measure: HTMLElement): number {
 }
 
 function getPreferredColumnCount(availableWidth: number, measureWidth: number): number {
-  for (const columns of [8, 4, 3, 2]) {
+  for (const columns of [8, 4, 2]) {
     if ((columns * measureWidth) + ((columns - 1) * MEASURE_GAP) <= availableWidth) {
       return columns;
     }
