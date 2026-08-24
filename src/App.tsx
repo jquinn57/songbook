@@ -19,6 +19,7 @@ function App() {
   const [fileName, setFileName] = useState<string>('');
   const [transposeSemitones, setTransposeSemitones] = useState(0);
   const [showNashvilleNumbers, setShowNashvilleNumbers] = useState(false);
+  const [zoomPercent, setZoomPercent] = useState(100);
   const [importedSongs, setImportedSongs] = useState<LibrarySong[]>([]);
   const [selectedSongId, setSelectedSongId] = useState('');
   const [offlineReady, setOfflineReady] = useState(false);
@@ -215,6 +216,27 @@ function App() {
                 SD
               </button>
             </div>
+            <div className="zoom-controls" aria-label="Chord chart zoom">
+              <button
+                aria-label="Zoom out"
+                className="zoom-btn"
+                disabled={zoomPercent <= 60}
+                onClick={() => setZoomPercent((zoom) => Math.max(60, zoom - 10))}
+                type="button"
+              >
+                −
+              </button>
+              <span className="zoom-display">Zoom {zoomPercent}%</span>
+              <button
+                aria-label="Zoom in"
+                className="zoom-btn"
+                disabled={zoomPercent >= 140}
+                onClick={() => setZoomPercent((zoom) => Math.min(140, zoom + 10))}
+                type="button"
+              >
+                +
+              </button>
+            </div>
             {transposeSemitones !== 0 && (
               <button
                 className="transpose-reset"
@@ -240,6 +262,7 @@ function App() {
             song={song}
             transposeSemitones={transposeSemitones}
             showNashvilleNumbers={showNashvilleNumbers}
+            zoomPercent={zoomPercent}
           />
         ) : (
           <div className="empty-state">Open a file to preview the song.</div>

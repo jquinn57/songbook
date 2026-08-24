@@ -7,6 +7,7 @@ interface SongViewProps {
   song: Song;
   transposeSemitones?: number;
   showNashvilleNumbers?: boolean;
+  zoomPercent?: number;
 }
 
 interface MeasureLayout {
@@ -26,7 +27,12 @@ interface TimedPhrase {
 const INITIAL_LAYOUT: MeasureLayout = { columns: 4, measureWidth: 180 };
 const MEASURE_GAP = 8;
 
-export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = false }: SongViewProps) {
+export function SongView({
+  song,
+  transposeSemitones = 0,
+  showNashvilleNumbers = false,
+  zoomPercent = 100,
+}: SongViewProps) {
   const songKeyRoot = getKeyRoot(song.metadata.key);
   const songBodyRef = useRef<HTMLDivElement>(null);
   const [layout, setLayout] = useState<MeasureLayout>(INITIAL_LAYOUT);
@@ -69,7 +75,7 @@ export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = 
         - parseFloat(sectionStyle.paddingRight);
 
       const measureWidth = Math.max(
-        120,
+        120 * (zoomPercent / 100),
         ...measureElements.map(getRequiredMeasureWidth),
       );
       const columns = getPreferredColumnCount(availableWidth, measureWidth);
@@ -87,10 +93,13 @@ export function SongView({ song, transposeSemitones = 0, showNashvilleNumbers = 
     document.fonts?.ready.then(calculateLayout);
 
     return () => resizeObserver.disconnect();
-  }, [song, transposeSemitones, showNashvilleNumbers]);
+  }, [song, transposeSemitones, showNashvilleNumbers, zoomPercent]);
 
   return (
-    <article className="song-view">
+    <article
+      className="song-view"
+      style={{ '--song-font-size': `${zoomPercent / 100}rem` } as CSSProperties}
+    >
       <header className="metadata-card">
         <div>
           <h2>{song.metadata.title ?? 'Untitled Song'}</h2>
@@ -401,13 +410,14 @@ function getRequiredMeasureWidth(measure: HTMLElement): number {
   const workflow = measure.querySelector<HTMLElement>('.measure-workflow');
   const phrases = Array.from(measure.querySelectorAll<HTMLElement>('.timed-phrase'));
   if (!workflow || phrases.length === 0) {
-    return 120;
+    return 0;
   }
 
   const phraseGap = parseFloat(getComputedStyle(phrases[0]).columnGap) || 0;
-  const lyricContentWidth = phrases.reduce(
-    (width, phrase) => width + phrase.scrollWidth,
-    phraseGap * Math.max(0, phrases.length - 1),
+  const phraseWidths = phrases.map((phrase) => getRequiredPhraseWidth(phrase, measure));
+  const lyricContentWidth = phraseWidths.reduce(
+    (width, phraseWidth) => width + phraseWidth,
+    phraseGap * Math.max(0, phraseWidths.length - 1),
   );
   const anchoredChordWidth = measure.querySelector<HTMLElement>('.measure-start-chord')?.scrollWidth ?? 0;
   const requiredContentWidth = Math.max(lyricContentWidth, anchoredChordWidth);
@@ -417,6 +427,16 @@ function getRequiredMeasureWidth(measure: HTMLElement): number {
     + parseFloat(measureStyle.borderLeftWidth)
     + parseFloat(measureStyle.borderRightWidth);
   return Math.ceil(requiredContentWidth + horizontalChrome + 4);
+}
+
+function getRequiredPhraseWidth(phrase: HTMLElement, measure: HTMLElement): number {
+  if (!measure.classList.contains('chord-only')) {
+    return phrase.scrollWidth;
+  }
+
+  const chordWidths = Array.from(phrase.querySelectorAll<HTMLElement>('.segment-group .chord'))
+    .map((chord) => chord.scrollWidth);
+  return chordWidths.length * Math.max(0, ...chordWidths);
 }
 
 function getPreferredColumnCount(availableWidth: number, measureWidth: number): number {
