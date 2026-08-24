@@ -2,9 +2,9 @@
 {artist: Grateful Dead}
 {key: G}
 {time: 4/4}
-{tempo: 112}
+{tempo: 128}
 
-{meta: form I/16 V1/16 V2/16 C/8 VF/16 V3/16 V4/16 C/8 V5/16 V6/16}
+{meta: form I/17 V1/16 V2/17 C/8 VF/17 V3/16 V4/17 C/8 V5/16 V6/16}
 
 
 {start_of_intro}
@@ -23,6 +23,7 @@
 [G]
 [D]
 [C]
+[G]
 [G] ~~ <3>If my words did
 {end_of_intro}
 
@@ -73,7 +74,7 @@
 [G] is no pebble
 [C] tossed ~~~~~~ nor
 [A7] wind to
-[D] blow.
+[D] blow. (Reach out your)
 {end_of_chorus}
 
 {verse: Flute verse}
@@ -86,15 +87,15 @@
 [C] cup ~~~~~~~ is
 [C] full may it
 [C] be a
-[G] gain. Let ot be
+[G] gain. Let it be
 [G] known
-[G] ~~ there is a 
+[G] ~~ there is a
 [C] foun-tain
 [C]
 [G] that was not
 [D] made
 [C] by the hands of
-[G] man. There is a 
+[G] man. There is a
 {end_of_verse}
 
 
@@ -104,11 +105,11 @@
 [C] high-way
 [C] ~~~~~~ be
 [C] tween ~~~~~~~ the
-[C] dan and the 
+[C] dawn  and the
 [C] dark of
 [G] night. and if you
 [G] go
-[G] ~~ no one may 
+[G] ~~ no one may
 [C] fol-low
 [C]
 [G] that path is
@@ -130,7 +131,7 @@
 [C] fall a-
 [G] lone. If you should
 [G] stand
-[G] ~~ then whose to 
+[G] ~~ then whose to
 [C] guide you
 [C]
 [G] if I know the
