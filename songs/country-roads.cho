@@ -2,34 +2,48 @@
 {artist: John Denver}
 {key: A}
 {time: 2/2}
-{tempo: 85}
+{tempo: 82}
 {meta: tonic_sd 1}
 
 {start_of_verse: Verse 1}
-[A] ~~Almost 
-[A] heaven, 
-[F#m] West Virgin- 
+[A] ~~Almost
+[A] heaven,
+[F#m] West Virgin-
 [F#m] ia,
 [E] Blue Ridge
-[E] Mountains, 
-[D] Shenandoah 
+[E] Mountains,
+[D] Shenandoah
 [A] River
 [A] -- .
+
 [A] Life is old
-[A] there, 
+[A] there,
 [F#m] older than the
 [F#m] trees
-[E] Younger than the 
-[E] mountains 
+[E] Younger than the
+[E] mountains
 [D] growin' like a br
-[A] eeze 
+[A] eeze. Country
 {end_of_verse}
 
 {start_of_chorus: Chorus}
- Country  |[A]Roads, |[A]take me |[E]home
- |[E] To the |[F#m]place |[F#m]I be |[D]long:
- |[D]West Vir |[A]-ginia, |[A]mountain |[E]momma,
- |[E]Take me |[D]home, |[D] Country |[A]Roads.|[A]|
+[A] Roads,
+[A] take me
+[E] home
+[E] To the
+[F#m] place
+[F#m] I be
+[D] long:
+[D] West Vir
+
+[A] -ginia,
+[A] mountain
+[E] momma,
+[E] Take me
+[D] home
+[D] Country
+[A] Roads.
+[A]
 {end_of_chorus}
 
 

@@ -1,86 +1,115 @@
 {title: Wildflowers}
 {artist: Tom Petty}
-{key: G}
+{key: F}
 {time: 4/4}
 {tempo: 174}
 
-{meta: form  I/8 C/16 V1/16 C/16}
+{meta: form  I/8 C/16 V1/16 C/16 I/21}
 
 
 {start_of_intro}
+[Bb]
+[F]
 [C]
-[G]
-[D]
-[G]
+[F]
+[Bb]
+[F]
 [C]
-[G]
-[D]
-[G]
+[F]
 {end_of_intro}
 
 
 {start_of_chorus}
-[C] You be-
-[G] long a-
-[D] mong the wild-
-[G] flowers
+[Bb] You be-
+[F] long a-
+[C] mong the wild-
+[F] flowers
 
-[C] You be-
-[G] long in a 
-[D] boat out at 
-[G] sea
+[Bb] You be-
+[F] long in a
+[C] boat out at
+[F] sea
 
-[C] Sail a-
-[G] way 
-[D] kill off the 
-[G] hours
+[Bb] Sail a-
+[F] way
+[C] kill off the
+[F] hours
 
-[C] You be-
-[G] long some-
-[D] where you feel
-[G] free
+[Bb] You be-
+[F] long some-
+[C] where you feel
+[F] free
 {end_of_chorus}
 
 
 {start_of_verse: Verse 1}
-[C] Run a-
-[G] way
-[D] find you a lo-
-[G] ver
+[Bb] Run a-
+[F] way
+[C] find you a lo-
+[F] ver
 
-[C] Go a-
-[G] way some-
-[D] where all 
-[D] bright and new
+[Bb] Go a-
+[F] way some-
+[C] where all
+[C] bright and new
 
-[C] I have
-[G] se-
-[D] en no
-[G] other
+[Bb] I have
+[F] se-
+[C] en no
+[F] other
 
-[C] Who com-
-[G] par-
-[D] res with
-[G] you.
+[Bb] Who com-
+[F] par-
+[C] res with
+[F] you.
 {end_of_verse}
 
 {chorus}
 
 {start_of_section: interlude}
+[F]
+[F]
+[F]
+[Bb] [F]
+[Dm] [G]
 [C]
-[G]
-[Em]
-[A]
-[D]
 [C]
-[Em]
-[D]
+[Bb]
+[Dm]
 [C]
-[G]
-[Em]
-[A]
-[D]
 [C]
-[Em]
-[D]
+[Bb] [F]
+[Dm] [G]
+[C]
+[C]
+[Bb]
+[Dm]
+[C]
+[C]
+[C]
+[C]
 {end_of_section}
+
+{start_of_verse: Verse 1}
+[Bb] Run a-
+[F] way
+[C] go find  a lo-
+[F] ver
+
+[Bb] Run a-
+[F] way let your
+[C] heart by your
+[C] guide
+
+[Bb] You de-
+[F] serve the
+[C] deepest of
+[F] cover
+
+[Bb] You be-
+[F] long in that
+[C] home by and
+[F] by.
+{end_of_verse}
+
+{chorus}
