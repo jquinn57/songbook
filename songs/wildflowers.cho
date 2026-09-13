@@ -1,0 +1,86 @@
+{title: Wildflowers}
+{artist: Tom Petty}
+{key: G}
+{time: 4/4}
+{tempo: 174}
+
+{meta: form  I/8 C/16 V1/16 C/16}
+
+
+{start_of_intro}
+[C]
+[G]
+[D]
+[G]
+[C]
+[G]
+[D]
+[G]
+{end_of_intro}
+
+
+{start_of_chorus}
+[C] You be-
+[G] long a-
+[D] mong the wild-
+[G] flowers
+
+[C] You be-
+[G] long in a 
+[D] boat out at 
+[G] sea
+
+[C] Sail a-
+[G] way 
+[D] kill off the 
+[G] hours
+
+[C] You be-
+[G] long some-
+[D] where you feel
+[G] free
+{end_of_chorus}
+
+
+{start_of_verse: Verse 1}
+[C] Run a-
+[G] way
+[D] find you a lo-
+[G] ver
+
+[C] Go a-
+[G] way some-
+[D] where all 
+[D] bright and new
+
+[C] I have
+[G] se-
+[D] en no
+[G] other
+
+[C] Who com-
+[G] par-
+[D] res with
+[G] you.
+{end_of_verse}
+
+{chorus}
+
+{start_of_section: interlude}
+[C]
+[G]
+[Em]
+[A]
+[D]
+[C]
+[Em]
+[D]
+[C]
+[G]
+[Em]
+[A]
+[D]
+[C]
+[Em]
+[D]
+{end_of_section}
